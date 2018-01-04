@@ -25,7 +25,7 @@ def index(request):
 	if request.user.is_authenticated():
 		var_username = request.user.username
 
-	cur_user_lunches = Lunch.objects.filter(chef__user__exact = var_username)
+#	cur_user_lunches = Lunch.objects.filter(chef__user__exact = var_username)
 
 	# Number of visits to this view, as counted in the session variable.
 	num_visits = request.session.get('num_visits', 0)
@@ -45,7 +45,7 @@ def index(request):
 						'num_chefs':num_chefs,
 						'num_nutrition_category':num_nutrition_category,
 						'num_visits':num_visits,
-						'cur_user_lunches':cur_user_lunches,
+#						'cur_user_lunches':cur_user_lunches,
 						'var_username':var_username
 					},
 	)

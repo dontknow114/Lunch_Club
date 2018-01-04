@@ -25,7 +25,7 @@ class Lunch(models.Model):
     Model representing a book (but not a specific copy of a book).
     """
     lunchname = models.CharField(max_length=200)
-    chef = models.ForeignKey('Chef', on_delete=models.SET_NULL, null=True)
+    chef = models.ForeignKey('Chef', on_delete=models.SET_NULL)
     # Foreign Key used because book can only have one author, but authors can have multiple books
     # Author as a string rather than object because it hasn't been declared yet in the file.
     description = models.TextField(max_length=1000, help_text="Enter a brief description of the lunch")

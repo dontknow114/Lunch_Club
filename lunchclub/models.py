@@ -95,7 +95,8 @@ def is_overdue(self):
 
 class Chef(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.CharField(max_length=200)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
     
     def get_absolute_url(self):
         """Returns the url to access a particular author instance."""
@@ -107,14 +108,14 @@ class Chef(models.Model):
         """
         return '%s' % (self.user)
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Chef.objects.create(user=instance)
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Chef.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.chef.save()
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.chef.save()
 
 
 class Arrangement(models.Model):

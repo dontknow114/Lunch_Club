@@ -46,7 +46,7 @@ def index(request):
 						'num_nutrition_category':num_nutrition_category,
 						'num_visits':num_visits,
 #						'cur_user_lunches':cur_user_lunches,
-						'var_username':var_username
+#						'var_username':var_username
 					},
 	)
 

@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','@=!hyze4ba3h#dnkr-cfj8)s_xrw50n
 #DEBUG = True
 DEBUG = bool(os.environ.get('DJANGO_DEBUG',True))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['weberlunchclub.herokuapp.com']
 
 
 # Application definition

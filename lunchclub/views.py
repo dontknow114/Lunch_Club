@@ -25,7 +25,7 @@ def index(request):
 	if request.user.is_authenticated():
 		var_username = request.user.username
 
-	cur_user_lunches = Lunch.objects.filter(chef__user__username__exact = var_username)
+	cur_user_lunches = Lunch.objects.filter(chef__user__exact = var_username)
 
 	# Number of visits to this view, as counted in the session variable.
 	num_visits = request.session.get('num_visits', 0)
@@ -113,7 +113,7 @@ class LunchesByUserListView(LoginRequiredMixin,generic.ListView):
 
 	def get_queryset(self):
 	#        return LunchInstance.objects.filter(gastronome=self.request.user).filter(status__exact='o').order_by('due_back')
-		return LunchInstance.objects.filter(lunch__chef__user__username=self.request.user).order_by('serve_date')
+		return LunchInstance.objects.filter(lunch__chef=self.request.user).order_by('serve_date')
 
 
 

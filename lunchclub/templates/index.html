@@ -1,0 +1,111 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<div class="col-lg-9">
+		<div class="card mt-4">
+			<div class="card-body">
+				<h2 class="card-title">Lunch Club Home - All Data</h2>
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Lunch Count</h3>
+				<h4>{{ num_lunches }}</h4>
+				<p class="card-text">This is the count of all lunches served and planned.</p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Instance Count</h3>
+				<h4>{{ num_instances }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Available Lunch Count</h3>
+				<h4>{{ num_instances_available }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Served Lunch Count</h3>
+				<h4>{{ num_instances_served }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Chef Count</h3>
+				<h4>{{ num_chefs }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Nutrition Category Count</h3>
+				<h4>{{ num_nutrition_category }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Your Lunch Count</h3>
+				<h4>{{ cur_user_lunches }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<h3 class="card-title">Your Username</h3>
+				<h4>{{ var_username }}</h4>
+				<p class="card-text"></p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				{% for cur_user_lunch in cur_user_lunches.all %}
+					<h3 class="card-title"></h3>
+					<h4>{{ cur_user_lunch }}</h4>
+					<p class="card-text"></p>
+					<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+					4.0 stars
+				{% endfor %}
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-body">
+				<p>You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.</p>
+			</div>
+		</div>
+		<!-- /.card -->
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">
+				Product Reviews
+			</div>
+			<div class="card-body">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+				<small class="text-muted">Posted by Anonymous on 3/1/17</small>
+				<hr>
+			</div>
+		</div>
+		<!-- /.card -->
+	</div>
+{% endblock %}

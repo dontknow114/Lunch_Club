@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<div class="col-lg-9">
+		<div class="card mt-4">
+			<!-- <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""> -->
+			<div class="card-body">
+				<h3 class="card-title">Chef: {{ chef.user.username }}</h3>
+				<h4>$24.99</h4>
+				<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+				<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+				4.0 stars
+			</div>
+		</div>
+		<!-- /.card -->
+	{% for lunch in chef.lunch_set.all %}
+		<div class="card card-outline-secondary my-4">
+			<div class="card-header">
+				{{ lunch.lunchname }}
+			</div>
+			<div class="card-body">
+				{% for instance in lunch.lunchinstance_set.all %}
+					<p>{{ instance.information }}</p>
+					<small class="text-muted">Posted by {{ chef }} on {{ instance.serve_date }}</small><br>
+					<p>{{ intance.information }}</p>
+					<a href="#" class="btn btn-success">Leave a Review</a>
+					<p></p>
+					<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+					4.0 stars
+
+					{% for arrangement in instance.arrangement_set.all %}
+						<p>Gastronome: {{ arrangement.gastronome }}</p>
+						<p>Patron Serve Status: {{ arrangement.serve_status_gastronome }}</p>
+						<p>Chef Serve Status: {{ arrangement.serve_status_chef }}</p>
+						<small class="text-muted">Kudos points earned for this arrangement ({{ arrangement.kudos }})</small><br>
+						<p></p>
+						<a href="#" class="btn btn-success">Leave a Review</a>
+						<p></p>
+					{% endfor %}
+					<hr>
+				{% endfor %}
+			</div>
+		</div>
+	 <!-- /.card -->
+	{% endfor %}
+</div>
+<!-- /.col-lg-9 -->
+<!-- collapsable details div -->
+{% endblock %}

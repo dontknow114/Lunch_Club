@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Lunch Arrangements</h1>
+
+    {% if arrangement_list %}
+    <ul>
+
+      {% for arrangements in arrangement_list %}
+
+      <li>
+      
+        <a href="{{ arrangements.get_absolute_url }}">{{ arrangements.lunchinstance.lunch.lunchname }} {{ arrangements.chef }} {{ arrangements.gastronomer }}</a>
+      
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no lunch arrangements planned.</p>
+    {% endif %}       
+{% endblock %}
+
+

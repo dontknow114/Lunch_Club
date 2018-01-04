@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Borrowed books</h1>
+
+    {% if lunchinstance_list %}
+    <ul>
+
+      {% for lunchinst in lunchinstance_list %} 
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'lunch-detail' lunchinst.lunch.pk %}">{{lunchinst.lunch.lunchname}}</a> ({{ lunchinst.serve_date }})        
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>There are no books borrowed.</p>
+    {% endif %}       
+{% endblock %}

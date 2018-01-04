@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Chef List</h1>
+
+    {% if chef_list %}
+    <ul>
+
+      {% for chef in chef_list %}
+
+      <li>
+        <a href="{{ chef.get_absolute_url }}">{{ chef.user }}</a>
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no chefs in this kitchen.</p>
+    {% endif %}       
+{% endblock %}
+
+

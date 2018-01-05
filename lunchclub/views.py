@@ -4,7 +4,7 @@ import calendar
 
 # Create your views here.
 
-from .models import NutritionCategory, Lunch, LunchInstance, Chef, Arrangement
+from .models import NutritionCategory, Lunch, LunchInstance, Arrangement #, Chef
 
 def index(request):
 	"""
@@ -83,12 +83,12 @@ class LunchListView(generic.ListView):
 class LunchDetailView(generic.DetailView):
 	model = Lunch
 
-class ChefListView(generic.ListView):
-	model = Chef
+# class ChefListView(generic.ListView):
+# 	model = Chef
 #    paginate_by = 5
 
-class ChefDetailView(generic.DetailView):
-	model = Chef
+# class ChefDetailView(generic.DetailView):
+# 	model = Chef
 
 class ArrangementListView(generic.ListView):
 	model = Arrangement

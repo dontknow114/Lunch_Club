@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chef, NutritionCategory, Lunch, LunchInstance, Arrangement
+from .models import NutritionCategory, Lunch, LunchInstance, Arrangement #,Chef
 
 #admin.site.register(Lunch)
 #admin.site.register(Chef)
@@ -11,13 +11,13 @@ class LunchInline(admin.TabularInline):
 	model = Lunch
 	extra = 0
 
-@admin.register(Chef)
+# @admin.register(Chef)
 # Define the admin class
-class ChefAdmin(admin.ModelAdmin):
+# class ChefAdmin(admin.ModelAdmin):
 	#this will add additional fields the list view of the chefs link
-	list_display = ('user',)
-	inlines = [LunchInline]
-	fields = ('user',)
+	# list_display = ('user',)
+	# inlines = [LunchInline]
+	# fields = ('user',)
 	#fields = [('last_name', 'first_name')]
 	#fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
 
@@ -58,7 +58,7 @@ class LunchInstanceAdmin(admin.ModelAdmin):
 
 @admin.register(Arrangement)
 class ArrangementAdmin(admin.ModelAdmin):
-	list_display = ('id','chef','gastronome','lunchname','lunchinstanceinfo')
+	list_display = ('id','gastronome','lunchname','lunchinstanceinfo')
 
 	def lunchname(self, obj):
 		return obj.lunchinstance.lunch.lunchname

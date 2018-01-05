@@ -25,7 +25,7 @@ class Lunch(models.Model):
     Model representing a book (but not a specific copy of a book).
     """
     lunchname = models.CharField(max_length=200)
-    chef = models.ForeignKey('Chef')
+    chef = models.ForeignKey(User)
     # Foreign Key used because book can only have one author, but authors can have multiple books
     # Author as a string rather than object because it hasn't been declared yet in the file.
     description = models.TextField(max_length=1000, help_text="Enter a brief description of the lunch")
@@ -93,20 +93,20 @@ def is_overdue(self):
 
 
 
-class Chef(models.Model):
+# class Chef(models.Model):
 
-    user = models.CharField(max_length=200)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     user = models.CharField(max_length=200)
+#     # user = models.OneToOneField(User, on_delete=models.CASCADE)
     
-    def get_absolute_url(self):
-        """Returns the url to access a particular author instance."""
-        return reverse('chef-detail', args=[str(self.id)])
+#     def get_absolute_url(self):
+#         """Returns the url to access a particular author instance."""
+#         return reverse('chef-detail', args=[str(self.id)])
     
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return '%s' % (self.user)
+#     def __str__(self):
+#         """
+#         String for representing the Model object.
+#         """
+#         return '%s' % (self.user)
 
 # @receiver(post_save, sender=User)
 # def create_user_profile(sender, instance, created, **kwargs):
@@ -121,7 +121,7 @@ class Chef(models.Model):
 class Arrangement(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular transaction for this lunch instance")
 
-    gastronome = models.ForeignKey('Chef', on_delete=models.SET_NULL, null=True, related_name='gastronome_arrangement')
+    gastronome = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     serve_date = models.DateField(null=True, blank=True)
     kudos_amount = models.IntegerField(help_text = "Amount for this transaction")
 
@@ -149,7 +149,7 @@ class Arrangement(models.Model):
         return reverse('arrangement-detail', args=[str(self.id)])
 
     def __str__(self):
-        return '%s %s %s' % (self.lunchinstance.lunch.chef, self.gastronome, self.lunchinstance)
+        return '%s %s %s' % (self.lunchinstance.lunch.user.username, self.gastronome, self.lunchinstance)
 
 
 

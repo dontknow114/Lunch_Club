@@ -17,7 +17,7 @@ def index(request):
 	num_instances_available = LunchInstance.objects.filter(status__exact = 'po').count()
 	num_instances_planned_closed = LunchInstance.objects.filter(status__exact = 'pc').count()
 	num_instances_served = LunchInstance.objects.filter(status__exact = 'sd').count()
-	num_chefs = Chef.objects.all().count()  # The 'all()' is implied by default.
+	# num_chefs = Chef.objects.all().count()  # The 'all()' is implied by default.
 
 
 
@@ -42,9 +42,9 @@ def index(request):
 						'num_instances':num_instances,
 						'num_instances_available':num_instances_available,
 						'num_instances_served':num_instances_served,
-						'num_chefs':num_chefs,
+						# 'num_chefs':num_chefs,
 						'num_nutrition_category':num_nutrition_category,
-						'num_visits':num_visits,
+#						'num_visits':num_visits
 #						'cur_user_lunches':cur_user_lunches,
 #						'var_username':var_username
 					},

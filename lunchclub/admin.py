@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NutritionCategory, Lunch, LunchInstance, Arrangement #,Chef
+from .models import NutritionCategory, Lunch, Recipe, Arrangement #,Chef
 
 #admin.site.register(Lunch)
 #admin.site.register(Chef)
@@ -7,8 +7,8 @@ admin.site.register(NutritionCategory)
 #admin.site.register(LunchInstance)
 
 
-class LunchInline(admin.TabularInline):
-	model = Lunch
+class RecipeInline(admin.TabularInline):
+	model = Recipe
 	extra = 0
 
 # @admin.register(Chef)
@@ -21,32 +21,32 @@ class LunchInline(admin.TabularInline):
 	#fields = [('last_name', 'first_name')]
 	#fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
 
-class LunchInstanceInline(admin.TabularInline):
-	model = LunchInstance
+class LunchInline(admin.TabularInline):
+	model = Lunch
 	extra = 1
 
 # Register the Admin classes for Book using the decorator
-@admin.register(Lunch)
-class LunchAdmin(admin.ModelAdmin):
-	list_display = ('lunchname', 'chef', 'display_nutcat')
-	inlines = [LunchInstanceInline]
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+	list_display = ('recipe_name', 'chef', 'display_nutcat')
+	inlines = [LunchInline]
 
 	fieldsets = (
-		('test', {
-		    'fields': ('lunchname', 'chef', 'description', 'nutritioncategory')
+		('Recipe', {
+		    'fields': ('recipe_name', 'chef', 'description', 'nutritioncategory')
 		}),
 	)
 
 # Register the Admin classes for BookInstance using the decorator
 
-@admin.register(LunchInstance) 
-class LunchInstanceAdmin(admin.ModelAdmin):
+@admin.register(Lunch) 
+class LunchAdmin(admin.ModelAdmin):
 	list_filter = ('status', 'serve_date')
-	list_display = ('lunch', 'information','serve_date', 'status')
+	list_display = ('recipe', 'information','serve_date', 'status')
 	
 	fieldsets = (
-		('Lunch Information', {
-		    'fields': ('lunch', 'information')
+		('Recipe Information', {
+		    'fields': ('recipe', 'information')
 		}),
 		('Lunch Status', {
 		    'fields': ('status', 'serve_date')
@@ -58,13 +58,13 @@ class LunchInstanceAdmin(admin.ModelAdmin):
 
 @admin.register(Arrangement)
 class ArrangementAdmin(admin.ModelAdmin):
-	list_display = ('id','gastronome','lunchname','lunchinstanceinfo')
+	list_display = ('id','gastronome','lunchinfo')
 
-	def lunchname(self, obj):
-		return obj.lunchinstance.lunch.lunchname
+#	def recipe_name(self, obj):
+#		return obj.lunch.recipe
 	def chef(self, obj):
-		return obj.lunchinstance.lunch.chef
-	def lunchinstanceinfo(self, obj):
-		return obj.lunchinstance.information
+		return obj.lunch.recipe.chef
+	def lunchinfo(self, obj):
+		return obj.lunch.information
 	
 

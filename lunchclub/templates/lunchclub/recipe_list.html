@@ -26,8 +26,8 @@
 			<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
 		</div>
 	</div> -->
-	{% if lunch_list %}
-		{% for lunch in lunch_list %}
+	{% if recipe_list %}
+		{% for recipe in recipe_list %}
 			<div id="Day" style="padding:16px;">
 				<hr style="margin:6px;height:60px;">
 				<div class="jumbotron" id="plusone">
@@ -41,18 +41,20 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-6">
-							<h3>{{ lunch.lunchname }} wA</h3>
+							<h3>{{ recipe.recipe_name }} wA</h3>
 							<hr>
-							<h4 class="text-left">{{ lunch.description }}</h4>
-									<p>{% for nutcat in lunch.nutritioncategory.all %}#{{ nutcat }}, {% endfor %}</p>
+							<h4 class="text-left">{{ recipe.description }}</h4>
+									<p>{% for nutritioncategory in recipe.nutritioncategory.all %}#{{ nutritioncategory }}, {% endfor %}</p>
 						</div>
-						<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;"><img src="assets/img/Peppers.jpg" style="width:79%;margin:0px;max-height:125;padding:10px;"></div>
+						<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;">
+							<img src="{% static 'assets/img/Peppers.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
+						</div>
 					</div>
 					<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
 				</div>
 			</div>
 		{% endfor %}
 	{% else %}
-		<p>There are no lunches to choose from.</p>
+		<p>There are no recipes to choose from.</p>
 	{% endif %}
 {% endblock %}

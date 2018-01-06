@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<h1>Recipe Name: {{ recipe.recipe_name }}</h1>
+
+	<p><strong>Chef:</strong> <a href="{{ recipe.chef.get_absolute_url }}">{{ recipe.chef }}</a></p> <!-- author detail link not yet defined -->
+	<p><strong>Recipe Information:</strong> {{ recipe.description }}</p>
+<!--  <p><strong>ISBN:</strong> {{ book.isbn }}</p> !-->
+<!--  <p><strong>Language:</strong> {{ book.language }}</p> !-->
+	<p><strong>Nutrition Type:</strong>
+
+		{% for nutritioncategory in recipe.nutritioncategory.all %} 
+		
+			{{ nutritioncategory }}
+			{% if not forloop.last %},
+			{% endif %}
+		
+		{% endfor %}</p>  
+
+	<div style="margin-left:20px;margin-top:20px">
+		<h4>Lunches from this Recipe</h4>
+
+		{% for lunch in recipe.lunch_set.all %}
+		
+			<hr>
+			<p class="{% if lunch.status == 'po' %}text-success{% elif insance.status == 'pc' %}text-danger{% else %}text-warning{% endif %}">{{ lunch.get_status_display }}</p>
+
+			{% if lunch.status != 'po' %}
+				<p><strong>Due to be returned:</strong>{{lunch.serve_date}}</p>
+			{% endif %}
+
+			<p><strong>Information:</strong> {{lunch.information}}</p>
+			<p class="text-muted"><strong>Id:</strong> {{lunch.id}}</p>
+		
+		{% endfor %}
+	</div>
+{% endblock %}

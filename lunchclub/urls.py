@@ -6,8 +6,12 @@ from . import views
 urlpatterns = [
 
 	url(r'^$', views.index, name='index'),
-	url(r'^lunchlist/$', views.LunchListView.as_view(), name = 'lunchlist'),
-	url(r'^lunch/(?P<pk>\d+)$', views.LunchDetailView.as_view(), name='lunch-detail'),
+
+	url(r'^recipelist/$', views.RecipeListView.as_view(), name = 'recipelist'),
+	url(r'^recipe/(?P<pk>\d+)$', views.RecipeDetailView.as_view(), name='recipe-detail'),
+
+#	url(r'^lunchlist/$', views.LunchListView.as_view(), name = 'Lunchlist'),
+#	url(r'^lunch/(?P<pk>\d+)$', views.LunchDetailView.as_view(), name='lunch-detail'),
 
 	# url(r'^cheflist/$', views.ChefListView.as_view(), name = 'cheflist'),
 	# url(r'^chef/(?P<pk>\d+)$', views.ChefDetailView.as_view(), name='chef-detail'),

@@ -20,11 +20,11 @@ class NutritionCategory(models.Model):
 
 from django.urls import reverse #Used to generate URLs by reversing the URL patterns
 
-class Lunch(models.Model):
+class Recipe(models.Model):
     """
     Model representing a book (but not a specific copy of a book).
     """
-    lunchname = models.CharField(max_length=200)
+    recipe_name = models.CharField(max_length=200)
     chef = models.ForeignKey(User)
     # Foreign Key used because book can only have one author, but authors can have multiple books
     # Author as a string rather than object because it hasn't been declared yet in the file.
@@ -37,13 +37,13 @@ class Lunch(models.Model):
         """
         String for representing the Model object.
         """
-        return self.lunchname
+        return self.recipe_name
     
     def get_absolute_url(self):
         """
         Returns the url to access a particular book instance.
         """
-        return reverse('lunch-detail', args=[str(self.id)])
+        return reverse('recipe-detail', args=[str(self.id)])
 
     def display_nutcat(self):
         """
@@ -55,12 +55,12 @@ class Lunch(models.Model):
 
 
 import uuid # Required for unique book instances
-class LunchInstance(models.Model):
+class Lunch(models.Model):
     """
     Model representing a specific copy of a book (i.e. that can be borrowed from the library).
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular lunch across all lunches served and planned")
-    lunch = models.ForeignKey('Lunch', on_delete=models.SET_NULL, null=True) 
+#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular lunch across all lunches served and planned")
+    recipe = models.ForeignKey('Recipe', on_delete=models.SET_NULL, null=True) 
     information = models.TextField(max_length=1000)
     serve_date = models.DateField(null=True, blank=True)
 
@@ -82,7 +82,7 @@ class LunchInstance(models.Model):
         """
         String for representing the Model object
         """
-        return '%s - %s - %s - %s' % (self.lunch.lunchname, self.information, self.serve_date, self.status)
+        return '%s - %s - %s - %s' % (self.recipe.recipe_name, self.information, self.serve_date, self.status)
 
 
 @property
@@ -139,17 +139,15 @@ class Arrangement(models.Model):
         ('D', 'Disputed'),
     )
 
-
     serve_status_chef = models.CharField(max_length=1, choices=SERVE_STATUS_CHEF, blank=True, default='P', help_text='Status of the lunch provided')
     serve_status_gastronome = models.CharField(max_length=1, choices=SERVE_STATUS_GASTRONOME, blank=True, default='R', help_text='Status of the lunch reserved')
-    lunchinstance = models.ForeignKey('LunchInstance', on_delete=models.SET_NULL, null=True)
-
+    lunch = models.ForeignKey('Lunch', on_delete=models.SET_NULL, null=True)
 
     def get_absolute_url(self):
         return reverse('arrangement-detail', args=[str(self.id)])
 
     def __str__(self):
-        return '%s %s %s' % (self.lunchinstance.lunch.user.username, self.gastronome, self.lunchinstance)
+        return '%s %s %s' % (self.lunch.recipe.user.username, self.gastronome, self.lunch)
 
 
 

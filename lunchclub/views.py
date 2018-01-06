@@ -5,6 +5,7 @@ import calendar
 # Create your views here.
 
 from .models import NutritionCategory, Lunch, LunchInstance, Arrangement #, Chef
+from django.contrib.auth.models import User 
 
 def index(request):
 	"""
@@ -18,14 +19,14 @@ def index(request):
 	num_instances_planned_closed = LunchInstance.objects.filter(status__exact = 'pc').count()
 	num_instances_served = LunchInstance.objects.filter(status__exact = 'sd').count()
 	# num_chefs = Chef.objects.all().count()  # The 'all()' is implied by default.
-
+	num_users = User.objects.all().count()
 
 
 	var_username = None
 	if request.user.is_authenticated():
 		var_username = request.user.username
 
-#	cur_user_lunches = Lunch.objects.filter(chef__user__exact = var_username)
+	cur_user_lunches = Lunch.objects.filter(chef__username__exact = var_username).count()
 
 	# Number of visits to this view, as counted in the session variable.
 	num_visits = request.session.get('num_visits', 0)
@@ -44,9 +45,10 @@ def index(request):
 						'num_instances_served':num_instances_served,
 						# 'num_chefs':num_chefs,
 						'num_nutrition_category':num_nutrition_category,
-#						'num_visits':num_visits
-#						'cur_user_lunches':cur_user_lunches,
-#						'var_username':var_username
+						'num_visits':num_visits,
+						'cur_user_lunches':cur_user_lunches,
+						'var_username':var_username,
+						'num_users':num_users,
 					},
 	)
 

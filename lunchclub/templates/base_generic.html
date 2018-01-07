@@ -45,28 +45,15 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="active" role="presentation"><a href="#">This Week</a></li>
 				<li role="presentation"><a href="#plusthree">Next Week</a></li>
+				<li role="presentation"><a href="{% url 'recipelist' %}">All Recipes</a></li>
+				<li role="presentation"><a href="#">All Lunches</a></li>
+				<li role="presentation"><a href="{% url 'arrangementlist' %}">All Arrangements</a></li>
+				<li role="presentation"><a href="">All Chefs</a></li>
 				<li role="presentation"><a href="#Calendar">Calendar View</a></li>
 				<li role="presentation"><a href="#">Profile </a></li>
 				<li role="presentation"><a href="{% url 'my-lunches' %}" class="list-group-item">My Lunches:</a></li>
-				<li role="presentation"><a href="#" class="list-group-item">Test Category</a></li>
 				<li role="presentation"><a href="{% url 'group-lunches' %}" class="list-group-item">Group Lunches</a></li>
-				<li role="presentation"><a href="{% url 'group-lunches' %}" class="list-group-item">Signed in: {{ user.username }}</a></li>
-
-				<li class="nav-item active">
-					<a class="nav-link" href="{% url 'index' %}">Home
-					<span class="sr-only">(current)</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{% url 'lunchlist' %}">All Lunches</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="">All Chefs</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{% url 'arrangementlist' %}">All Arrangements</a>
-				</li>
-
+				<li role="presentation"><a href="{% url 'my-lunches' %}" class="list-group-item">Signed in: {{ user.username }}</a></li>
 			</ul>
 			</div>
 		</div>
@@ -101,7 +88,7 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="{% url 'lunchlist' %}">All Lunches</a>
+				<a class="nav-link" href="{% url 'recipelist' %}">All Lunches</a>
 			</li>
 			<li class="nav-item">
 			</li>

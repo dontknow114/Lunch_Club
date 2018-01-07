@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 {% block content %}
+	{% load static %}
 
 	<h1>Lunch List</h1>
 
@@ -41,13 +42,13 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-6">
-							<h3>{{ recipe.recipe_name }} wA</h3>
+							<h3><a href="{{ recipe.get_absolute_url }}">{{ chef.user }}{{ recipe.recipe_name }}</a></h3>
 							<hr>
 							<h4 class="text-left">{{ recipe.description }}</h4>
 									<p>{% for nutritioncategory in recipe.nutritioncategory.all %}#{{ nutritioncategory }}, {% endfor %}</p>
 						</div>
 						<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;">
-							<img src="{% static 'assets/img/Peppers.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
+							<img src="{% static 'assets\img\Burger.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
 						</div>
 					</div>
 					<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>

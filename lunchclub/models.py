@@ -30,6 +30,7 @@ class Recipe(models.Model):
     # Author as a string rather than object because it hasn't been declared yet in the file.
     description = models.TextField(max_length=1000, help_text="Enter a brief description of the lunch")
     nutritioncategory = models.ManyToManyField(NutritionCategory, help_text="Select a nutrition category for this book")
+    recipe_image = models.ImageField(upload_to='', null=True, blank=True)
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.    
 
@@ -59,7 +60,7 @@ class Lunch(models.Model):
     """
     Model representing a specific copy of a book (i.e. that can be borrowed from the library).
     """
-#    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular lunch across all lunches served and planned")
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular lunch across all lunches served and planned")
     recipe = models.ForeignKey('Recipe', on_delete=models.SET_NULL, null=True) 
     information = models.TextField(max_length=1000)
     serve_date = models.DateField(null=True, blank=True)
@@ -122,7 +123,6 @@ class Arrangement(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular transaction for this lunch instance")
 
     gastronome = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    serve_date = models.DateField(null=True, blank=True)
     kudos_amount = models.IntegerField(help_text = "Amount for this transaction")
 
 
@@ -147,7 +147,7 @@ class Arrangement(models.Model):
         return reverse('arrangement-detail', args=[str(self.id)])
 
     def __str__(self):
-        return '%s %s %s' % (self.lunch.recipe.user.username, self.gastronome, self.lunch)
+        return '%s %s %s' % (self.lunch.recipe.chef.username, self.gastronome, self.lunch)
 
 
 

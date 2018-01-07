@@ -56,7 +56,7 @@ def index(request):
 from django.views import generic
 
 class RecipeListView(generic.ListView):
-	model = Lunch
+	model = Recipe
 	paginate_by = 5
 
 	def get_context_data(self, **kwargs):
@@ -106,12 +106,12 @@ class LunchesByUserListView(LoginRequiredMixin,generic.ListView):
 	Generic class-based view listing books on loan to current user. 
 	"""
 	model = Lunch
-	template_name ='lunchclub/lunchinstance_list_applied_user.html'
+	template_name ='lunchclub/lunch_list_applied_user.html'
 	paginate_by = 2
 
 	def get_queryset(self):
 	#        return LunchInstance.objects.filter(gastronome=self.request.user).filter(status__exact='o').order_by('due_back')
-		return Lunch.objects.filter(Recipe__chef=self.request.user).order_by('serve_date')
+		return Lunch.objects.filter(recipe__chef=self.request.user).order_by('serve_date')
 
 
 

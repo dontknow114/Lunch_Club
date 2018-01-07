@@ -28,12 +28,12 @@ class LunchInline(admin.TabularInline):
 # Register the Admin classes for Book using the decorator
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-	list_display = ('recipe_name', 'chef', 'display_nutcat')
+	list_display = ('recipe_name', 'chef', 'display_nutcat', 'recipe_image')
 	inlines = [LunchInline]
 
 	fieldsets = (
 		('Recipe', {
-		    'fields': ('recipe_name', 'chef', 'description', 'nutritioncategory')
+		    'fields': ('recipe_name', 'chef', 'description', 'nutritioncategory', 'recipe_image')
 		}),
 	)
 
@@ -60,8 +60,8 @@ class LunchAdmin(admin.ModelAdmin):
 class ArrangementAdmin(admin.ModelAdmin):
 	list_display = ('id','gastronome','lunchinfo')
 
-#	def recipe_name(self, obj):
-#		return obj.lunch.recipe
+	def recipe_name(self, obj):
+		return obj.lunch.recipe
 	def chef(self, obj):
 		return obj.lunch.recipe.chef
 	def lunchinfo(self, obj):

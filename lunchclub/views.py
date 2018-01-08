@@ -6,6 +6,7 @@ import calendar
 
 from .models import NutritionCategory, Recipe, Lunch, Arrangement #, Chef
 from django.contrib.auth.models import User 
+from django.views import generic
 
 def index(request):
 	"""
@@ -53,8 +54,6 @@ def index(request):
 	)
 
 
-from django.views import generic
-
 class RecipeListView(generic.ListView):
 	model = Recipe
 	paginate_by = 5
@@ -85,12 +84,24 @@ class RecipeListView(generic.ListView):
 class RecipeDetailView(generic.DetailView):
 	model = Recipe
 
-# class ChefListView(generic.ListView):
-# 	model = Chef
-#    paginate_by = 5
+class ChefListView(generic.ListView):
+	model = User
 
-# class ChefDetailView(generic.DetailView):
-# 	model = Chef
+class ChefDetailView(generic.DetailView):
+	model = User
+
+class LunchListView(generic.ListView):
+	model = Lunch
+	paginate_by = 10
+
+	def get_context_data(self, **kwargs):		
+
+		context = super(LunchListView, self).get_context_data(**kwargs)
+
+		return context
+
+class LunchDetailView(generic.DetailView):
+	model = Lunch
 
 class ArrangementListView(generic.ListView):
 	model = Arrangement

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 	
-	{% block title %}<title>LunchBox</title>{% endblock %}
+	{% block title %}<title>LunchBoxTestNet</title>{% endblock %}
 	{% load static %}
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,7 +46,7 @@
 				<li class="active" role="presentation"><a href="#">This Week</a></li>
 				<li role="presentation"><a href="#plusthree">Next Week</a></li>
 				<li role="presentation"><a href="{% url 'recipelist' %}">All Recipes</a></li>
-				<li role="presentation"><a href="#">All Lunches</a></li>
+				<li role="presentation"><a href="{% url 'lunchlist' %}">All Lunches</a></li>
 				<li role="presentation"><a href="{% url 'arrangementlist' %}">All Arrangements</a></li>
 				<li role="presentation"><a href="">All Chefs</a></li>
 				<li role="presentation"><a href="#Calendar">Calendar View</a></li>
@@ -56,18 +56,6 @@
 				<li role="presentation"><a href="{% url 'my-lunches' %}" class="list-group-item">Signed in: {{ user.username }}</a></li>
 			</ul>
 			</div>
-		</div>
-
-		<div class="container">
-		<a class="navbar-brand" href="{% url 'index' %}">Lunch Club</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-			<ul class="navbar-nav ml-auto">
-
-			</ul>
-		</div>
 		</div>
 	</nav>
 

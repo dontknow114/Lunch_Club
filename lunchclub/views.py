@@ -56,6 +56,27 @@ def index(request):
 					},
 	)
 
+def nextweek(request):
+	datechoice = request.GET['datechoice']
+	lastweek = date.today() - datetime.timedelta(days=int(datechoice))
+	nextweek = date.today() + datetime.timedelta(days=int(datechoice))
+	togglenextweek = int(datechoice) + 7
+	togglelastweek = int(datechoice) - 7
+
+	return render(
+		request,
+		'lunchclub/nextweek.html',
+		context =	{
+						'datechoice':datechoice,
+						'prevweek':lastweek,
+						'nextweek':nextweek,
+						'togglenextweek':togglenextweek,
+						'togglelastweek':togglelastweek,
+					},
+	)
+	#Code to filter products whose price is less than price_lte i.e. 5000
+
+
 
 class thisweekListView(generic.ListView):
 
@@ -98,6 +119,8 @@ class thisweekListView(generic.ListView):
 									'Key2' : { 'SubKey2' : 'SubVal2' }
 								}
 		return context
+
+
 
 
 class RecipeListView(generic.ListView):

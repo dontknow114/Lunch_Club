@@ -5,9 +5,16 @@
 
 
 		<div id="Day" style="padding:16px;">
+
 			<hr style="margin:6px;height:60px;">
 
-
+			<div class="jumbotron" id="plusone">
+				<div class="row">
+					<div class="col-xs-6">
+						<span><a href="../nextweek?datechoice=-7">Prev Week</a> or <a href="../nextweek?datechoice=7">Next Week</a></span>
+					</div>
+				</div>
+			</div>
 
 {% for day, lunch_object in thisweek.items %} 
 			<div class="jumbotron" id="plusone">
@@ -70,14 +77,5 @@
 {% endfor %}
 
 
-				{% for key, value in test %}
-					{{ key }}
-					{% for key2 in value %}
 
-						{{ key2 }}
-						<br>
-					{% endfor %}
-					<br>
-				{% endfor %}
-				<br>
 {% endblock %}

@@ -39,3 +39,8 @@ urlpatterns += [
 urlpatterns += [   
     url(r'^thisweek/$', views.thisweekListView.as_view(), name='this-week'),
 ]
+
+
+urlpatterns += [
+	url(r'^nextweek/$', views.nextweek, name='next-week'),
+]

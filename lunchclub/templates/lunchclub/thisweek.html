@@ -1,0 +1,83 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% load static %}
+
+
+		<div id="Day" style="padding:16px;">
+			<hr style="margin:6px;height:60px;">
+
+
+
+{% for day, lunch_object in thisweek.items %} 
+			<div class="jumbotron" id="plusone">
+				<div class="row">
+					<div class="col-xs-6">
+						<h1 class="text-left">{{ day }}</h1>
+					</div>
+				</div>
+					{% if lunch_object %}
+						{% for lunch_values in lunch_object %}
+								<div class="jumbotron" id="plusone">
+									<div class="row">
+										<div class="col-sm-6">
+											<h3><a href="{{ lunch.recipe.get_absolute_url }}">{{ lunch_values.recipe.recipe_name }}</a></h3>
+											<h3>{{ lunch_values.lunch_weekday }}</h3>
+											<hr>
+											<h4 class="text-left">{{ lunch_values.information }}</h4>
+											<h4 class="text-left">{{ lunch_values.serve_date }}</h4>
+											<p>{% for nutritioncategory in lunch_values.recipe.nutritioncategory.all %}#{{ nutritioncategory }} {% endfor %}</p>
+											<p>by {{ lunch_values.recipe.chef.username }}</p>
+										</div>
+										<div class="col-xs-6">
+											{% if lunch_values.status == 'po' %}
+												<h2 class="text-left">Planned and open for sign up</h2>
+											{% elif lunch_values.status == 'pc' %}
+												<h2 class="text-left">Planned, but no sign ups available</h2>
+											{% elif lunch_values.status == 'sd' %}
+												<h2 class="text-left">Already served and enjoyed</h2>
+											{% elif lunch_values.status == 'cd' %}
+												<h2 class="text-left">Cancelled</h2>
+											{% else %}
+												<h2 class="text-left">No Lunches to sign up for today</h2>
+											{% endif %}
+										</div>
+										<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;">
+											<img src="{% static 'assets\img\Burger.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
+										</div>
+									</div>
+									<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
+								</div>
+								<br>
+						{% endfor %}
+					{% else %}
+								<div class="jumbotron" id="plusone">
+									<div class="row">
+											<h3>Nothing Available</h3>
+									</div>
+									<p><a class="btn btn-default" role="button" href="#">Create a Lunch</a></p>
+								</div>
+					{% endif %}
+
+				<br>
+			</div>
+
+			<br>
+{% endfor %}
+		</div>
+{% for i in "xxxxxxxxxxxxxxxxxxxx" %}
+	<!-- Hello -->
+{% endfor %}
+
+
+				{% for key, value in test %}
+					{{ key }}
+					{% for key2 in value %}
+
+						{{ key2 }}
+						<br>
+					{% endfor %}
+					<br>
+				{% endfor %}
+				<br>
+{% endblock %}

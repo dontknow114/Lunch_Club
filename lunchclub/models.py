@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from datetime import date
+
+from datetime import date, datetime
+import calendar
 # Create your models here.
 
 
@@ -91,6 +93,17 @@ class Lunch(models.Model):
 				"""
 				return reverse('lunch-detail', args=[str(self.id)])
 
+		def lunch_weekday(self):
+			lunch_weekday = calendar.day_name[date(self.serve_date.year, self.serve_date.month, self.serve_date.day).weekday()]
+			return lunch_weekday
+
+		def lunch_test(self):
+			lunch_test = 'Hello1'
+			return lunch_test
+
+		def lunch_weekday_num(self):
+			lunch_weekday_num = date(self.serve_date.year, self.serve_date.month, self.serve_date.day).weekday()
+			return lunch_weekday_num
 
 @property
 def is_overdue(self):

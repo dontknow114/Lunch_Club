@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from datetime import date
+from datetime import date, datetime
 import calendar
+
 
 # Create your views here.
 
@@ -15,6 +16,7 @@ def index(request):
 	# Generate counts of some of the main objects
 	num_recipes = Recipe.objects.all().count()
 	num_lunches = Lunch.objects.all().count()
+	num_lunches_all = Lunch.objects.all()
 	# Available books (status = 'a')
 	num_lunches_available = Lunch.objects.filter(status__exact = 'po').count()
 	num_lunches_planned_closed = Lunch.objects.filter(status__exact = 'pc').count()
@@ -40,8 +42,8 @@ def index(request):
 		request,
 		'index.html',
 		context =	{
-						'num_recipes':num_recipes,
 						'num_lunches':num_lunches,
+						'num_recipes':num_recipes,
 						'num_lunches_available':num_lunches_available,
 						'num_lunches_served':num_lunches_served,
 						# 'num_chefs':num_chefs,
@@ -50,8 +52,52 @@ def index(request):
 						'cur_user_recipes':cur_user_recipes,
 						'var_username':var_username,
 						'num_users':num_users,
+						'num_lunches_all':num_lunches_all,
 					},
 	)
+
+
+class thisweekListView(generic.ListView):
+
+	model = Lunch
+	template_name ='lunchclub/thisweek.html'
+
+
+	
+
+	def get_queryset(self):
+	#        return LunchInstance.objects.filter(gastronome=self.request.user).filter(status__exact='o').order_by('due_back')
+		var1 = datetime.datetime.today().weekday()
+		return Lunch.objects.filter(serve_date__range=(date.today(), date.today() + datetime.timedelta(days=60) - datetime.timedelta(days=var1) )).order_by('serve_date')
+
+	def get_context_data(self, **kwargs):
+		context = super(thisweekListView, self).get_context_data(**kwargs)
+#		context['test'] = datetime.datetime.today().weekday()
+#		context['week'] = (('Monday',1),'Tuesday','Wednesday','Thursday','Friday')
+
+		var_monday = date.today() - datetime.timedelta(days=datetime.datetime.today().weekday())
+		var_monday_str = var_monday.strftime("%b %d")
+		var_tue = var_monday + datetime.timedelta(days=1)
+		var_wed = var_monday + datetime.timedelta(days=2)
+		var_thu = var_monday + datetime.timedelta(days=3)
+		var_fri = var_monday + datetime.timedelta(days=4)
+
+		context['thisweek'] =	{
+									'Mon - ' + var_monday_str:Lunch.objects.filter(serve_date = var_monday),
+									'Tue - ' + var_tue.strftime("%b %d"):Lunch.objects.filter(serve_date = var_monday + datetime.timedelta(days=1)),
+									'Wed - ' + var_wed.strftime("%b %d"):Lunch.objects.filter(serve_date = var_monday + datetime.timedelta(days=2)),
+									'Thu - ' + var_thu.strftime("%b %d"):Lunch.objects.filter(serve_date = var_monday + datetime.timedelta(days=3)),
+									'Fri - ' + var_thu.strftime("%b %d"):Lunch.objects.filter(serve_date = var_monday + datetime.timedelta(days=4))
+								}
+		return context
+
+
+
+		context['test'] =		{
+									'Key1' : { 'SubKey1' : 'SubVal1' },
+									'Key2' : { 'SubKey2' : 'SubVal2' }
+								}
+		return context
 
 
 class RecipeListView(generic.ListView):
@@ -139,9 +185,6 @@ class LunchesByGroupListView(PermissionRequiredMixin,generic.ListView):
 	#permission_required = ('catalog.can_mark_returned', 'catalog.can_edit')
 	# Note that 'catalog.can_edit' is just an example
 	# the catalog application doesn't have such permission!
-
-
-
 
 
 

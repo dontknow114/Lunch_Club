@@ -35,3 +35,7 @@ urlpatterns += [
 urlpatterns += [   
     url(r'^lunch/(?P<pk>[-\w]+)/renew/$', views.renew_lunch_chef, name='lunch-renew-chef'),
 ]
+
+urlpatterns += [   
+    url(r'^thisweek/$', views.thisweekListView.as_view(), name='this-week'),
+]

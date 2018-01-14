@@ -58,33 +58,48 @@ def index(request):
 
 def nextweek(request):
 	datechoice = request.GET['datechoice']
-	lastweek = date.today() - datetime.timedelta(days=int(datechoice))
-	nextweek = date.today() + datetime.timedelta(days=int(datechoice))
-	togglenextweek = int(datechoice) + 7
-	togglelastweek = int(datechoice) - 7
+
+	var_mon = date.today() - datetime.timedelta(days=datetime.datetime.today().weekday()) + datetime.timedelta(days=7)
+
+	next_week = var_mon + datetime.timedelta(days=int(datechoice))
+	prev_week = next_week - datetime.timedelta(days=7)
+	
+	toggle_next_week = int(datechoice) + 7
+	toggle_prev_week = int(datechoice) - 7
+
+	all_lunch_objects = Lunch.objects.filter(serve_date__range=(prev_week, next_week)).order_by('serve_date')
+
+	var_tue = prev_week + datetime.timedelta(days=1)
+	var_wed = prev_week + datetime.timedelta(days=2)
+	var_thu = prev_week + datetime.timedelta(days=3)
+	var_fri = prev_week + datetime.timedelta(days=4)
 
 	return render(
 		request,
-		'lunchclub/nextweek.html',
+		'lunchclub/otherweek.html',
 		context =	{
 						'datechoice':datechoice,
-						'prevweek':lastweek,
-						'nextweek':nextweek,
-						'togglenextweek':togglenextweek,
-						'togglelastweek':togglelastweek,
+						'prev_week':prev_week,
+						'next_week':next_week,
+						'toggle_next_week':toggle_next_week,
+						'toggle_prev_week':toggle_prev_week,
+						'weekdays':
+							{
+								'Monday':Lunch.objects.filter(serve_date__range=(prev_week, prev_week)).order_by('serve_date'),
+								'Tuesday':Lunch.objects.filter(serve_date__range=(var_tue,var_tue)).order_by('serve_date'),
+								'Wednesday':Lunch.objects.filter(serve_date__range=(var_wed,var_wed)).order_by('serve_date'),
+								'Thursday':Lunch.objects.filter(serve_date__range=(var_thu,var_thu)).order_by('serve_date'),
+								'Friday':Lunch.objects.filter(serve_date__range=(var_fri,var_fri)).order_by('serve_date'),
+							},
+						#'all_lunch_objects':all_lunch_objects,
 					},
 	)
 	#Code to filter products whose price is less than price_lte i.e. 5000
-
-
 
 class thisweekListView(generic.ListView):
 
 	model = Lunch
 	template_name ='lunchclub/thisweek.html'
-
-
-	
 
 	def get_queryset(self):
 	#        return LunchInstance.objects.filter(gastronome=self.request.user).filter(status__exact='o').order_by('due_back')

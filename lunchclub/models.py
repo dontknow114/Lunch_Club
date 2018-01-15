@@ -112,38 +112,10 @@ def is_overdue(self):
 	return False
 
 
-
-# class Chef(models.Model):
-
-#     user = models.CharField(max_length=200)
-#     # user = models.OneToOneField(User, on_delete=models.CASCADE)
-		
-#     def get_absolute_url(self):
-#         """Returns the url to access a particular author instance."""
-#         return reverse('chef-detail', args=[str(self.id)])
-		
-#     def __str__(self):
-#         """
-#         String for representing the Model object.
-#         """
-#         return '%s' % (self.user)
-
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Chef.objects.create(user=instance)
-
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.chef.save()
-
-
 class Arrangement(models.Model):
 		id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular transaction for this lunch instance")
-
 		gastronome = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 		kudos_amount = models.IntegerField(help_text = "Amount for this transaction")
-
 
 		SERVE_STATUS_CHEF = (
 				('P', 'Planned'),
@@ -170,3 +142,9 @@ class Arrangement(models.Model):
 
 
 
+class Profile(models.Model):
+		user = models.OneToOneField(User)
+		bio = models.TextField(max_length=500, blank=True)
+
+		def get_absolute_url(self):
+				return reverse('user-profile', args=[str(self.id)])

@@ -47,7 +47,7 @@
 							<h4 class="text-left">{{ lunch.information }}</h4>
 							<h4 class="text-left">{{ lunch.serve_date }}</h4>
 							<p>{% for nutritioncategory in lunch.recipe.nutritioncategory.all %}#{{ nutritioncategory }} {% endfor %}</p>
-							<p>by {{ lunch.recipe.chef.username }}</p>
+							<p><a href="{{ lunch.recipe.chef.profile.get_absolute_url }}">by {{ lunch.recipe.chef.username }}</a></p>
 						</div>
 						<div class="col-xs-6">
 				{% if lunch.status == 'po' %}

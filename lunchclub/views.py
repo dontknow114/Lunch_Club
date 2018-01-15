@@ -5,25 +5,18 @@ import calendar
 
 # Create your views here.
 
-from .models import NutritionCategory, Recipe, Lunch, Arrangement #, Chef
+from .models import NutritionCategory, Recipe, Lunch, Arrangement, Profile
 from django.contrib.auth.models import User 
 from django.views import generic
 
 def index(request):
-	"""
-	View function for home page of site.
-	"""
-	# Generate counts of some of the main objects
 	num_recipes = Recipe.objects.all().count()
 	num_lunches = Lunch.objects.all().count()
 	num_lunches_all = Lunch.objects.all()
-	# Available books (status = 'a')
 	num_lunches_available = Lunch.objects.filter(status__exact = 'po').count()
 	num_lunches_planned_closed = Lunch.objects.filter(status__exact = 'pc').count()
 	num_lunches_served = Lunch.objects.filter(status__exact = 'sd').count()
-	# num_chefs = Chef.objects.all().count()  # The 'all()' is implied by default.
 	num_users = User.objects.all().count()
-
 
 	var_username = None
 	if request.user.is_authenticated():
@@ -56,6 +49,7 @@ def index(request):
 					},
 	)
 
+
 def nextweek(request):
 	datechoice = request.GET['datechoice']
 
@@ -68,7 +62,6 @@ def nextweek(request):
 	toggle_prev_week = int(datechoice) - 7
 
 	all_lunch_objects = Lunch.objects.filter(serve_date__range=(prev_week, next_week)).order_by('serve_date')
-
 	var_tue = prev_week + datetime.timedelta(days=1)
 	var_wed = prev_week + datetime.timedelta(days=2)
 	var_thu = prev_week + datetime.timedelta(days=3)
@@ -96,6 +89,7 @@ def nextweek(request):
 	)
 	#Code to filter products whose price is less than price_lte i.e. 5000
 
+
 class thisweekListView(generic.ListView):
 
 	model = Lunch
@@ -110,7 +104,6 @@ class thisweekListView(generic.ListView):
 		context = super(thisweekListView, self).get_context_data(**kwargs)
 #		context['test'] = datetime.datetime.today().weekday()
 #		context['week'] = (('Monday',1),'Tuesday','Wednesday','Thursday','Friday')
-
 		var_monday = date.today() - datetime.timedelta(days=datetime.datetime.today().weekday())
 		var_monday_str = var_monday.strftime("%b %d")
 		var_tue = var_monday + datetime.timedelta(days=1)
@@ -126,16 +119,11 @@ class thisweekListView(generic.ListView):
 									'Fri - ' + var_thu.strftime("%b %d"):Lunch.objects.filter(serve_date = var_monday + datetime.timedelta(days=4))
 								}
 		return context
-
-
-
 		context['test'] =		{
 									'Key1' : { 'SubKey1' : 'SubVal1' },
 									'Key2' : { 'SubKey2' : 'SubVal2' }
 								}
 		return context
-
-
 
 
 class RecipeListView(generic.ListView):
@@ -168,34 +156,38 @@ class RecipeListView(generic.ListView):
 class RecipeDetailView(generic.DetailView):
 	model = Recipe
 
+
 class ChefListView(generic.ListView):
 	model = User
 
+
 class ChefDetailView(generic.DetailView):
 	model = User
+
 
 class LunchListView(generic.ListView):
 	model = Lunch
 	paginate_by = 10
 
 	def get_context_data(self, **kwargs):		
-
 		context = super(LunchListView, self).get_context_data(**kwargs)
-
 		return context
+
 
 class LunchDetailView(generic.DetailView):
 	model = Lunch
+
 
 class ArrangementListView(generic.ListView):
 	model = Arrangement
 	paginate_by = 10
 
+
 class ArrangementDetailView(generic.DetailView):
 	model = Arrangement
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 class LunchesByUserListView(LoginRequiredMixin,generic.ListView):
 	"""
 	Generic class-based view listing books on loan to current user. 
@@ -209,9 +201,7 @@ class LunchesByUserListView(LoginRequiredMixin,generic.ListView):
 		return Lunch.objects.filter(recipe__chef=self.request.user).order_by('serve_date')
 
 
-
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
 class LunchesByGroupListView(PermissionRequiredMixin,generic.ListView):
 	permission_required = 'lunchclub.can_mark_served'
 	model = Lunch
@@ -225,8 +215,15 @@ class LunchesByGroupListView(PermissionRequiredMixin,generic.ListView):
 	# the catalog application doesn't have such permission!
 
 
+class UserDetailView(generic.DetailView):
+	model = Profile
 
 
+
+
+
+
+############################ form section##############################################################################################
 
 from django.contrib.auth.decorators import permission_required
 

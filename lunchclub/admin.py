@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NutritionCategory, Lunch, Recipe, Arrangement #,Chef
+from .models import NutritionCategory, Lunch, Recipe, Arrangement, Profile
 
 #admin.site.register(Lunch)
 #admin.site.register(Chef)
@@ -58,7 +58,7 @@ class LunchAdmin(admin.ModelAdmin):
 
 @admin.register(Arrangement)
 class ArrangementAdmin(admin.ModelAdmin):
-	list_display = ('id','gastronome','lunchinfo')
+	list_display = ('id','gastronome','lunchinfo','recipe_name')
 
 	def recipe_name(self, obj):
 		return obj.lunch.recipe
@@ -67,4 +67,13 @@ class ArrangementAdmin(admin.ModelAdmin):
 	def lunchinfo(self, obj):
 		return obj.lunch.information
 	
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+	list_display = ('user','bio','username','user_email')
+
+	def username(self, obj):
+		return obj.user.username
+	def user_email(self, obj):
+		return obj.user.email
 

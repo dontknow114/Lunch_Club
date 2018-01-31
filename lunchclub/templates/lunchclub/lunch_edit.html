@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+{% block content %}
+	
+	<br>
+	<br>
+	<br>
+	<div>
+	{% if user.username == chef %}
+		<div>
+			<h1>Edit This Lunch</h1>
+			<h2>Recipe: {{ recipe }}</h1>
+			<h3>Chef: {{ chef }}</h3>
+			<h4>Weekday: {{ weekday }}</h4>
+			<h4>
+			{% if lunch.status == 'po' %}Open to sign up
+			{% elif lunch.status == 'pc' %}Planned, but full
+			{% elif lunch.status == 'sd' %}This lunch has already been served
+			{% elif lunch.status == 'cd' %}This lunch has been cancelled
+			{% endif %}
+			</h4>
+
+			<form method="POST" class="post-form">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="save btn btn-default">Save</button>
+			</form>
+		</div>
+	{% else %}
+		<div>
+			<h1>This is not your lunch to edit</h1>
+		</div>
+	{% endif %}
+	</div>
+
+{% endblock %}

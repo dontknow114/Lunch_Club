@@ -1,0 +1,87 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% load static %}
+
+
+		<div id="Day" style="padding:16px;">
+			<hr style="margin:6px;height:60px;">
+			<div class="jumbotron" id="plusone">
+				<div class="jumbotron" id="plusone">
+					<div class="row">
+						<div class="col-xs-6">
+							<span><a href="../weekview?datechoice={{ toggle_prev_week }}">Prev Week</a> or <a href="../weekview?datechoice={{ toggle_next_week }}">Next Week</a></span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+<!-- 						<h1 class="text-left">{{ request.GET.datechoice }}</h1>
+						<h1 class="text-left">{{ datechoice }}</h1> -->
+						<p>{{ prev_week }} through {{ next_week }}</p>
+					</div>
+				</div>
+				<br>
+			</div>
+			<br>
+		</div>
+
+<!-- this is the star of the actual this week code -->
+
+		<div id="Day" style="padding:16px;">
+			<hr style="margin:6px;height:60px;">
+	{% for weekday, lunches in weekdays.items %}
+			<div class="jumbotron" id="plusone">
+				<div class="row">
+					<div class="col-xs-6">
+						<h1 class="text-left">{{ weekday }}</h1>
+					</div>
+				</div>
+		{% if lunches %}
+			{% for lunch in lunches %}
+				<div class="jumbotron" id="plusone">
+					<div class="row">
+						<div class="col-sm-6">
+							<h3><a href="{{ lunch.recipe.get_absolute_url }}">{{ lunch.recipe.recipe_name }}</a></h3>
+							<hr>
+							<h4 class="text-left">{{ lunch.information }}</h4>
+							<h4 class="text-left">{{ lunch.serve_date }}</h4>
+							<p>{% for nutritioncategory in lunch.recipe.nutritioncategory.all %}#{{ nutritioncategory }} {% endfor %}</p>
+							<p><a href="{{ lunch.recipe.chef.profile.get_absolute_url }}">by {{ lunch.recipe.chef.username }}</a></p>
+						</div>
+						<div class="col-xs-6">
+				{% if lunch.status == 'po' %}
+							<h2 class="text-left">Planned and open for sign up</h2>
+				{% elif lunch.status == 'pc' %}
+							<h2 class="text-left">Planned, but no sign ups available</h2>
+				{% elif lunch.status == 'sd' %}
+							<h2 class="text-left">Already served and enjoyed</h2>
+				{% elif lunch.status == 'cd' %}
+							<h2 class="text-left">Cancelled</h2>
+				{% else %}
+							<h2 class="text-left">No Lunches to sign up for today</h2>
+				{% endif %}
+						</div>
+						<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;">
+							<img src="{% static 'assets\img\Burger.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
+						</div>
+					</div>
+					<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
+				</div>
+				<br>
+			{% endfor %}
+		{% else %}
+				<div class="jumbotron" id="plusone">
+					<div class="row">
+							<h3>Nothing Available</h3>
+					</div>
+					<p><a class="btn btn-default" role="button" href="#">Create a Lunch</a></p>
+				</div>
+		{% endif %}
+				<br>
+			</div>
+			<br>
+	{% endfor %}
+		</div>
+
+{% endblock %}

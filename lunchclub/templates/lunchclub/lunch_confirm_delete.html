@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+	<h1>Delete Lunch</h1>
+
+	<p>Are you sure you want to delete this lunch: {{ lunch }}?</p>
+
+	<form action="" method="POST">
+		{% csrf_token %}
+
+		<input type="submit" action="" value="Yes, delete." />
+		<a href="{% url 'lunchlist' %}">Cancel</a>
+	</form>
+
+{% endblock %}

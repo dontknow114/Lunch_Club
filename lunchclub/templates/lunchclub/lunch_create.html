@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+{% block content %}
+	
+	<br>
+	<br>
+	<br>
+	<div>
+		<h2>Chef: {{ user.username }}</h2>
+		<h1>New Lunch</h1>
+		<form method="POST" class="post-form">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit" class="save btn btn-default">Save</button>
+		</form>
+	</div>
+
+{% endblock %}

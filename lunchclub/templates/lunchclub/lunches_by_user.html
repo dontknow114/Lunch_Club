@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+		<h1>My Lunches</h1>
+		{% if lunch_list %}
+		<ul>
+			{% for lunch in lunch_list %} 
+			<li class="{% if lunch.is_overdue %}text-danger{% endif %}">
+				<a href="{% url 'recipe-detail' lunch.recipe.pk %}">{{lunch.recipe.recipe_name}}</a> ({{ lunch.serve_date }})        
+			</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			<p>You do not have any lunches provided or planned.</p>
+		{% endif %}       
+{% endblock %}

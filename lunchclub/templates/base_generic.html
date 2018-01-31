@@ -43,17 +43,19 @@
 				data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div>
 			<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active" role="presentation"><a href="{% url 'this-week' %}">This Week</a></li>
-				<li role="presentation"><a href="../nextweek?datechoice=7">Next Week</a></li>
-				<li role="presentation"><a href="{% url 'recipelist' %}">All Recipes</a></li>
-				<li role="presentation"><a href="{% url 'lunchlist' %}">All Lunches</a></li>
-				<li role="presentation"><a href="{% url 'arrangementlist' %}">All Arrangements</a></li>
-				<li role="presentation"><a href="">All Chefs</a></li>
-				<li role="presentation"><a href="#Calendar">Calendar View</a></li>
-				<li role="presentation"><a href="#">Profile </a></li>
+				<li role="presentation"><a href="{% url 'week-view' %}?datechoice=0">Week View</a></li>
+				<li role="presentation"><a href="{% url 'recipe-create' %}">Add Recipe</span></a></li>
+				<li role="presentation"><a href="{% url 'lunch-create' %}">Add Lunch</span></a></li>
+				<!-- <li role="presentation"><a href="{% url 'group-lunches' %}" class="list-group-item">Group Lunches</a></li> -->
+				<li role="presentation"><a href="#" class="list-group-item">Signed in: {{ user.username }}</a></li>
+				<li role="presentation"><a href="#">My Profile </a></li>
+				<li role="presentation"><a href="{% url 'my-recipes' %}" class="list-group-item">My Recipes:</a></li>
 				<li role="presentation"><a href="{% url 'my-lunches' %}" class="list-group-item">My Lunches:</a></li>
-				<li role="presentation"><a href="{% url 'group-lunches' %}" class="list-group-item">Group Lunches</a></li>
-				<li role="presentation"><a href="{% url 'my-lunches' %}" class="list-group-item">Signed in: {{ user.username }}</a></li>
+		{% if user.is_staff %}
+				<li role="presentation"><a href="{% url 'recipelist' %}">All Recipes - Admin</a></li>
+				<li role="presentation"><a href="{% url 'lunchlist' %}">All Lunches - Admin</a></li>
+				<li role="presentation"><a href="{% url 'arrangementlist' %}">All Arrangements - Admin</a></li>
+		{% endif %}
 			</ul>
 			</div>
 		</div>

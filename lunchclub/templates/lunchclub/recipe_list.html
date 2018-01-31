@@ -3,30 +3,6 @@
 	{% load static %}
 
 	<h1>Lunch List</h1>
-
-<!-- 	<div id="Day" style="padding:16px;">
-		<hr style="margin:6px;height:60px;">
-		<div class="jumbotron" id="plusone">
-			<div class="row">
-				<div class="col-xs-6">
-					<h2 class="text-right">Monday </h2>
-				</div>
-				<div class="col-xs-6">
-					<h2 class="text-left">(Eaten) </h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6">
-					<h3>Kevin's Cheese Stuffed Bell Peppers</h3>
-					<hr>
-					<h4 class="text-left">Roasted red bell pepeprs stuffed with a 3-cheese blend, bacon and various herbs.</h4>
-					<p>#Low Carb #Keto</p>
-				</div>
-				<div class="col-sm-6" id="mealimage" style="margin:0px;max-height:100%;padding:0px;height:100%;"><img src="assets/img/Peppers.jpg" style="width:79%;margin:0px;max-height:125;padding:10px;"></div>
-			</div>
-			<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
-		</div>
-	</div> -->
 	{% if recipe_list %}
 		{% for recipe in recipe_list %}
 			<div id="Day" style="padding:16px;">
@@ -34,10 +10,10 @@
 				<div class="jumbotron" id="plusone">
 					<div class="row">
 						<div class="col-xs-6">
-							<h2 class="text-right">{{ weekday }}</h2>
+							<h2 class="text-right"></h2>
 						</div>
 						<div class="col-xs-6">
-							<h2 class="text-left">(Eaten)</h2>
+							<h2 class="text-left"></h2>
 						</div>
 					</div>
 					<div class="row">
@@ -51,7 +27,12 @@
 							<img src="{% static 'assets\img\Burger.jpg' %}" style="width:79%;margin:0px;max-height:125;padding:10px;">
 						</div>
 					</div>
-					<p><a class="btn btn-default" role="button" href="#">Mark as recieved</a><a class="btn btn-default" role="button" href="#">Leave a review</a></p>
+					<p>
+						<a class="btn btn-default" role="button" href="#">Mark as recieved</a>
+						<a class="btn btn-default" role="button" href="#">Leave a review</a>
+						<a class="btn btn-default" role="button" href="{{ recipe.get_absolute_url_edit }}">Edit</a>
+						<a class="btn btn-default" role="button" href="{{ recipe.get_absolute_url_delete }}">Delete</a>
+					</p>
 				</div>
 			</div>
 		{% endfor %}
